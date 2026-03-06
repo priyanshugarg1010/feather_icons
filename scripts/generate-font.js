@@ -1,9 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-const SVGIcons2SVGFontStream = require('svgicons2svgfont');
 const svg2ttf = require('svg2ttf');
 const ttf2woff = require('ttf2woff');
-const ttf2woff2 = require('ttf2woff2');
 
 const ICONS_JSON = path.resolve(__dirname, '..', 'fonts', 'icons.json');
 const SVGS_DIR = path.resolve(__dirname, '..', 'svgs');
@@ -14,7 +12,8 @@ const icons = JSON.parse(fs.readFileSync(ICONS_JSON, 'utf8'));
 console.log(`Found ${icons.length} icons in icons.json`);
 
 // Step 1: Generate SVG font
-function generateSvgFont() {
+async function generateSvgFont() {
+  const { SVGIcons2SVGFontStream } = await import('svgicons2svgfont');
   return new Promise((resolve, reject) => {
     const fontStream = new SVGIcons2SVGFontStream({
       fontName: 'feather',
@@ -69,6 +68,7 @@ async function main() {
   console.log(`Written feather.woff (${(woffBuffer.length / 1024).toFixed(1)} KB)`);
 
   console.log('Converting to WOFF2...');
+  const { default: ttf2woff2 } = await import('ttf2woff2');
   const woff2Buffer = ttf2woff2(ttfBuffer);
   fs.writeFileSync(path.join(FONTS_DIR, 'feather.woff2'), woff2Buffer);
   console.log(`Written feather.woff2 (${(woff2Buffer.length / 1024).toFixed(1)} KB)`);
