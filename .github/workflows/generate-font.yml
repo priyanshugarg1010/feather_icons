@@ -1,0 +1,40 @@
+name: Generate Font
+
+on:
+  push:
+    paths:
+      - 'svgs/**'
+      - 'fonts/icons.json'
+
+jobs:
+  generate-font:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install svgicons2svgfont svg2ttf ttf2woff ttf2woff2
+
+      - name: Generate font files
+        run: node scripts/generate-font.js
+
+      - name: Commit updated font files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add fonts/feather.ttf fonts/feather.woff fonts/feather.woff2
+          if git diff --staged --quiet; then
+            echo "No font changes to commit"
+          else
+            git commit -m "chore: regenerate font files [skip ci]"
+            git push
+          fi
