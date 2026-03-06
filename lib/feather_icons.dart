@@ -308,6 +308,7 @@ const Map<String, IconData> FeatherIconsMap = {
   'zoom-out': const FeatherIconData(0xea19),
   'qwertyuiop': const FeatherIconData(0xea1a),
   'qwertyuio': const FeatherIconData(0xea1b),
+  'qwerty': const FeatherIconData(0xea1c),
 };
 
 /// Export [IconData] via Camel Case property
@@ -605,6 +606,7 @@ class FeatherIcons {
   static const IconData zoomOut = const FeatherIconData(0xea19);
   static const IconData qwertyuiop = const FeatherIconData(0xea1a);
   static const IconData qwertyuio = const FeatherIconData(0xea1b);
+  static const IconData qwerty = const FeatherIconData(0xea1c);
 }
 
 /// Export [IconData] via Snake Case property
@@ -902,4 +904,5 @@ class FeatherIconsSnakeCase {
   static const IconData zoom_out = const FeatherIconData(0xea19);
   static const IconData qwertyuiop = const FeatherIconData(0xea1a);
   static const IconData qwertyuio = const FeatherIconData(0xea1b);
+  static const IconData qwerty = const FeatherIconData(0xea1c);
 }
